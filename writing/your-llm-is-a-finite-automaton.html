@@ -35,11 +35,11 @@
 
       <h2>What the papers actually prove</h2>
 
-      <p>Feng et al. (2023) proved that a constant-depth transformer generating intermediate tokens can simulate any Turing machine. Merrill &amp; Sabharwal (2024) showed that transformers with polynomial-length CoT can solve all problems in P. These are genuine results. But they share an assumption: <strong>the chain of thought is allowed to grow without bound as the input grows.</strong></p>
+      <p><a href="https://arxiv.org/abs/2305.12116">Feng et al. (2023)</a> proved that a constant-depth transformer generating intermediate tokens can simulate any Turing machine. <a href="https://arxiv.org/abs/2310.07923">Merrill &amp; Sabharwal (2024)</a> showed that transformers with polynomial-length CoT can solve all problems in P. These are genuine results. But they share an assumption: <strong>the chain of thought is allowed to grow without bound as the input grows.</strong></p>
 
       <p>This means the context window must scale with the problem. A problem of size <em>n</em> gets a window of size poly(<em>n</em>). That's not how any deployed system works. GPT-4's window is 128K whether you give it a 10-word prompt or a 100K-word document. The window is a constant, not a function of the input.</p>
 
-      <p>Li &amp; Wang (2025) got the precise result: the computational class of a transformer with window size <em>W</em> is exactly SPACE(<em>W</em>). For fixed <em>W</em>, that's a finite complexity class. Powerful&nbsp;&mdash; but bounded.</p>
+      <p>Recent work has shown that the computational class of a transformer with window size <em>W</em> is exactly SPACE(<em>W</em>). For fixed <em>W</em>, that's a finite complexity class. Powerful&nbsp;&mdash; but bounded.</p>
 
       <h2>What actually makes it Turing complete</h2>
 
@@ -47,7 +47,7 @@
 
       <p>Give a transformer access to a file system, a database, a persistent key-value store&nbsp;&mdash; anything it can read from, write to, and that persists between steps&nbsp;&mdash; and the composition is a Turing machine. The context window serves as the finite state control. The external store serves as the tape. The model reads from the store into its window, computes, writes back to the store, and moves on. This is literally the definition of a Turing machine: finite control plus infinite tape.</p>
 
-      <p>We proved this formally in Lean 4&nbsp;&mdash; a step-for-step simulation showing that any Turing machine with <em>S</em> states is perfectly replicated by a controller of size <em>S</em> operating on an external store. The proof has zero unresolved axioms.</p>
+      <p>This can be proved formally in Lean 4&nbsp;&mdash; a step-for-step simulation showing that any Turing machine with <em>S</em> states is perfectly replicated by a controller of size <em>S</em> operating on an external store. The proof has zero unresolved axioms.</p>
 
       <p>The key requirements for the store:</p>
 
@@ -64,12 +64,12 @@
       <div class="consequences">
         <p><strong>For architecture.</strong> External tools aren't a convenience&nbsp;&mdash; they're a computational necessity. The difference between an LLM with and without an external store isn't "faster" versus "slower." It's "finite automaton" versus "Turing machine." A qualitative jump in what's computable, not a quantitative improvement in speed.</p>
 
-        <p><strong>For scaling.</strong> Expanding the context window from 128K to 1M tokens makes the finite automaton larger, but it's still a finite automaton. It can handle bigger problems within its bound, but it cannot handle problems that exceed that bound no matter how long it runs. An 8K-token model with a well-organized external store is strictly more powerful than a 1M-token model without one.</p>
+        <p><strong>For scaling.</strong> Expanding the context window from 128K to 1M tokens makes the finite automaton larger, but it's still a finite automaton. It can handle bigger problems within its bound, but it cannot handle problems that exceed that bound no matter how long it runs. An 8K-token model with a well-organized external store belongs to a strictly larger computational class than a 1M-token model without one.</p>
 
         <p><strong>For organization.</strong> Once you have the store, a second question arises: does it matter how the store is organized? The answer is yes, dramatically. We prove (in a companion result, the Library Theorem) that an indexed store yields O(log N) retrieval versus O(N) for an unstructured store&nbsp;&mdash; an exponential gap. Over <em>T</em> reasoning steps, this compounds: O(T&nbsp;log&nbsp;N) versus &Theta;(T&sup2;). The more complex the problem, the more organization matters.</p>
       </div>
 
-      <span class="highlight">Externalization is what makes you capable. Organization is what makes you efficient. And the advantage of both grows without bound.</span>
+      <span class="highlight">Externalization is what makes a bounded agent capable. Organization is what makes it efficient. And the advantage of both grows without bound.</span>
 
       <h2>What this means in practice</h2>
 

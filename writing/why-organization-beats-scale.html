@@ -23,7 +23,7 @@
 
       <p>Everyone's intuition says yes. A library with a catalog is better than a pile of books. A filing cabinet with labels is better than a box of loose papers. But <em>how much</em> better? And does the advantage grow or shrink as the collection gets larger?</p>
 
-      <p>The answer, it turns out, is that organized retrieval is exponentially faster than unorganized retrieval. Not a little faster. Not twice as fast. Exponentially faster&nbsp;&mdash; and the advantage grows without bound as the collection grows. We proved this formally and tested it experimentally on language models.</p>
+      <p>The answer, it turns out, is that organized retrieval is exponentially faster than unorganized retrieval. Not a little faster. Not twice as fast. Exponentially faster&nbsp;&mdash; and the advantage grows without bound as the collection grows. I proved this formally and tested it experimentally on language models.</p>
 
       <h2>The setup</h2>
 
@@ -47,7 +47,7 @@
 
       <h2>What the experiments showed</h2>
 
-      <p>We tested this on GPT-4o-mini and GPT-5.4 across three types of content: random hashes (no prior knowledge possible), numeric sequences (some pattern), and encyclopedia entries (rich prior knowledge).</p>
+      <p>I tested this on GPT-4o-mini and GPT-5.4 across three types of content: random hashes (no prior knowledge possible), numeric sequences (some pattern), and encyclopedia entries (rich prior knowledge).</p>
 
       <p>Two predictions confirmed cleanly. First, there's an in-context ceiling: once the collection exceeds the context window, in-context retrieval degrades sharply. The window is a hard wall, not a soft one. Second, indexed retrieval scales logarithmically&nbsp;&mdash; the empirical cost curves match the theoretical O(log N) prediction.</p>
 
@@ -61,11 +61,11 @@
 
       <p>And critically: <strong>use semantic models to build the index, but deterministic algorithms to traverse it.</strong> The model is good at understanding what something means. It is bad at reliably following a 47-step lookup procedure. Build the tree with the model's judgment. Walk it with code.</p>
 
-      <span class="highlight">Intelligence scales through organization, not parameters. The library is not a metaphor. It is the mechanism.</span>
+      <span class="highlight">Organization is not a convenience. It is a computational necessity &mdash; and its advantage grows without bound.</span>
 
       <hr class="divider">
 
-      <p class="endnote">Mechanically verified in Lean 4 (4 modules, 0 sorry axioms). Experimental validation on GPT-4o-mini and GPT-5.4 across three content types. Full details in <a href="https://doi.org/10.48550/arXiv.2603.21272">The Library Theorem</a> (Mainen 2026).</p>
+      <p class="endnote">Mechanically verified in Lean 4 with no unresolved proof steps. Experimental validation on GPT-4o-mini and GPT-5.4 across three content types. Full details in <a href="https://doi.org/10.48550/arXiv.2603.21272">The Library Theorem</a> (Mainen 2026).</p>
 
 </article>
 </div>
